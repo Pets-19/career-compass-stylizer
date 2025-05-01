@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -53,7 +52,7 @@ export default function Login() {
         <div className="w-full max-w-md animate-fade-in">
           <div className="flex flex-col items-center mb-8 transition-all duration-300 hover:transform hover:scale-105">
             <Logo className="mb-4" />
-            <h1 className="text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400">Career Compass</h1>
+            <h1 className="text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400">Dreampilot</h1>
             <p className="text-gray-400 mt-2">Sign in to your account</p>
           </div>
           
