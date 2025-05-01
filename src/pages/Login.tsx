@@ -69,10 +69,16 @@ export default function Login() {
       {/* Right side with form */}
       <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-6 lg:p-16 bg-[#111827] text-white">
         <div className="w-full max-w-md animate-fade-in">
-          <div className="flex flex-col items-center mb-8 transition-all duration-300 hover:transform hover:scale-105">
-            <Logo className="mb-4" />
-            <h1 className="text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400">Dreampilot</h1>
-            <p className="text-gray-400 mt-2">Sign in to your account</p>
+          <div className="flex flex-col items-center mb-12 transition-all duration-300 hover:transform hover:scale-105">
+            <div className="relative mb-6">
+              <Logo className="h-16 w-16 text-blue-500" />
+              <div className="absolute -bottom-2 -right-2 h-6 w-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse"></div>
+            </div>
+            <h1 className="text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 tracking-tight">
+              DreamPilot
+            </h1>
+            <div className="h-1 w-24 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mt-2 mb-4 rounded-full"></div>
+            <p className="text-gray-400 text-lg">Sign in to your account</p>
           </div>
           
           <Form {...form}>

@@ -8,21 +8,22 @@ interface LogoProps {
 
 export function Logo({ className }: LogoProps) {
   return (
-    <div className={cn("flex items-center", className)}>
+    <div className={cn("flex items-center justify-center", className)}>
       <svg 
-        width="40" 
-        height="40" 
+        width="44" 
+        height="44" 
         viewBox="0 0 24 24" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg" 
-        className="text-blue-600"
+        className="text-blue-500"
       >
         <path 
           d="M12 2L2 7L12 12L22 7L12 2Z" 
           stroke="currentColor" 
           strokeWidth="2" 
           strokeLinecap="round" 
-          strokeLinejoin="round" 
+          strokeLinejoin="round"
+          fill="rgba(59, 130, 246, 0.1)" 
         />
         <path 
           d="M2 17L12 22L22 17" 
@@ -37,6 +38,13 @@ export function Logo({ className }: LogoProps) {
           strokeWidth="2" 
           strokeLinecap="round" 
           strokeLinejoin="round" 
+        />
+        <circle 
+          cx="12" 
+          cy="12" 
+          r="2" 
+          fill="currentColor" 
+          className="animate-pulse"
         />
       </svg>
     </div>
