@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,16 +6,34 @@ import { useToast } from "@/components/ui/use-toast";
 import { Logo } from "@/components/Logo";
 import { Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+// Define form validation schema
+const loginSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Initialize form with validation
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleSubmit = (values: LoginFormValues) => {
     setIsLoading(true);
     
     // Simulate login - replace with actual authentication
@@ -56,80 +75,90 @@ export default function Login() {
             <p className="text-gray-400 mt-2">Sign in to your account</p>
           </div>
           
-          <form onSubmit={handleSubmit} className="space-y-6 w-full">
-            <div className="space-y-2 transition-all duration-200 ease-in-out transform hover:translate-y-[-2px]">
-              <label htmlFor="email" className="text-sm font-medium text-gray-300">
-                Email
-              </label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@example.com"
-                required
-                className="w-full transition-all duration-200 focus:ring-2 focus:ring-[#374151]/50 hover:border-[#374151] bg-[#1F2937] border-[#374151] text-white placeholder-gray-500"
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 w-full">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="space-y-2 transition-all duration-200 ease-in-out transform hover:translate-y-[-2px]">
+                    <FormLabel className="text-sm font-medium text-gray-300">Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="email"
+                        placeholder="name@example.com"
+                        className="w-full transition-all duration-200 focus:ring-2 focus:ring-[#374151]/50 hover:border-[#374151] bg-[#1F2937] border-[#374151] text-white placeholder-gray-500"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-400 text-xs" />
+                  </FormItem>
+                )}
               />
-            </div>
-            
-            <div className="space-y-2 transition-all duration-200 ease-in-out transform hover:translate-y-[-2px]">
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="text-sm font-medium text-gray-300">
-                  Password
-                </label>
-                <Link to="/forgot-password" className="text-sm text-gray-400 hover:text-gray-200 hover:underline transition-colors duration-200">
-                  Forgot password?
+              
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem className="space-y-2 transition-all duration-200 ease-in-out transform hover:translate-y-[-2px]">
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="text-sm font-medium text-gray-300">Password</FormLabel>
+                      <Link to="/forgot-password" className="text-sm text-gray-400 hover:text-gray-200 hover:underline transition-colors duration-200">
+                        Forgot password?
+                      </Link>
+                    </div>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          type={showPassword ? "text" : "password"}
+                          placeholder="••••••••"
+                          className="w-full pr-10 transition-all duration-200 focus:ring-2 focus:ring-[#374151]/50 hover:border-[#374151] bg-[#1F2937] border-[#374151] text-white placeholder-gray-500"
+                        />
+                        <button 
+                          type="button"
+                          onClick={togglePasswordVisibility}
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 transition-colors duration-200"
+                        >
+                          {showPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                          ) : (
+                            <Eye className="h-4 w-4" />
+                          )}
+                        </button>
+                      </div>
+                    </FormControl>
+                    <FormMessage className="text-red-400 text-xs" />
+                  </FormItem>
+                )}
+              />
+              
+              <Button 
+                type="submit" 
+                className="w-full h-12 bg-gradient-to-r from-[#1F2937] to-[#374151] hover:from-[#374151] hover:to-[#1F2937] transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg text-white"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Signing in...
+                  </span>
+                ) : (
+                  "Sign in"
+                )}
+              </Button>
+              
+              <div className="text-center text-sm text-gray-400 mt-4 animate-fade-in">
+                Don't have an account?{" "}
+                <Link to="/register" className="text-gray-300 hover:text-white hover:underline transition-colors duration-200">
+                  Create an account
                 </Link>
               </div>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                  className="w-full pr-10 transition-all duration-200 focus:ring-2 focus:ring-[#374151]/50 hover:border-[#374151] bg-[#1F2937] border-[#374151] text-white placeholder-gray-500"
-                />
-                <button 
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 transition-colors duration-200"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </button>
-              </div>
-            </div>
-            
-            <Button 
-              type="submit" 
-              className="w-full h-12 bg-gradient-to-r from-[#1F2937] to-[#374151] hover:from-[#374151] hover:to-[#1F2937] transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg text-white"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <span className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Signing in...
-                </span>
-              ) : (
-                "Sign in"
-              )}
-            </Button>
-            
-            <div className="text-center text-sm text-gray-400 mt-4 animate-fade-in">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-gray-300 hover:text-white hover:underline transition-colors duration-200">
-                Create an account
-              </Link>
-            </div>
-          </form>
+            </form>
+          </Form>
         </div>
       </div>
     </div>
