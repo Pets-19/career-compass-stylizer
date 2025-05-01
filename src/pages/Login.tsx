@@ -33,14 +33,14 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-background">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[#111827]">
       {/* Left side with image */}
-      <div className="hidden lg:block lg:w-1/2 bg-gradient-to-br from-blue-600 to-indigo-800 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
+      <div className="hidden lg:block lg:w-1/2 bg-gradient-to-br from-[#1F2937] to-[#111827] relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/30"></div>
         <img 
           src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80" 
           alt="Person working on career development" 
-          className="h-full w-full object-cover opacity-80 transition-all duration-700 hover:scale-105"
+          className="h-full w-full object-cover opacity-70 transition-all duration-700 hover:scale-105"
         />
         <div className="absolute bottom-0 left-0 right-0 p-10 text-white animate-fade-in">
           <h2 className="text-3xl font-bold mb-2">Navigate Your Career Path</h2>
@@ -49,17 +49,17 @@ export default function Login() {
       </div>
       
       {/* Right side with form */}
-      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-6 lg:p-16">
+      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-6 lg:p-16 bg-[#111827] text-white">
         <div className="w-full max-w-md animate-fade-in">
           <div className="flex flex-col items-center mb-8 transition-all duration-300 hover:transform hover:scale-105">
             <Logo className="mb-4" />
-            <h1 className="text-3xl lg:text-4xl font-bold text-foreground bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-700">Career Compass</h1>
-            <p className="text-muted-foreground mt-2">Sign in to your account</p>
+            <h1 className="text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400">Career Compass</h1>
+            <p className="text-gray-400 mt-2">Sign in to your account</p>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-6 w-full">
             <div className="space-y-2 transition-all duration-200 ease-in-out transform hover:translate-y-[-2px]">
-              <label htmlFor="email" className="text-sm font-medium">
+              <label htmlFor="email" className="text-sm font-medium text-gray-300">
                 Email
               </label>
               <Input
@@ -69,16 +69,16 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
                 required
-                className="w-full transition-all duration-200 focus:ring-2 focus:ring-blue-500/50 hover:border-blue-400"
+                className="w-full transition-all duration-200 focus:ring-2 focus:ring-[#374151]/50 hover:border-[#374151] bg-[#1F2937] border-[#374151] text-white placeholder-gray-500"
               />
             </div>
             
             <div className="space-y-2 transition-all duration-200 ease-in-out transform hover:translate-y-[-2px]">
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="text-sm font-medium">
+                <label htmlFor="password" className="text-sm font-medium text-gray-300">
                   Password
                 </label>
-                <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200">
+                <Link to="/forgot-password" className="text-sm text-gray-400 hover:text-gray-200 hover:underline transition-colors duration-200">
                   Forgot password?
                 </Link>
               </div>
@@ -90,12 +90,12 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full pr-10 transition-all duration-200 focus:ring-2 focus:ring-blue-500/50 hover:border-blue-400"
+                  className="w-full pr-10 transition-all duration-200 focus:ring-2 focus:ring-[#374151]/50 hover:border-[#374151] bg-[#1F2937] border-[#374151] text-white placeholder-gray-500"
                 />
                 <button 
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 transition-colors duration-200"
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4" />
@@ -108,7 +108,7 @@ export default function Login() {
             
             <Button 
               type="submit" 
-              className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg"
+              className="w-full h-12 bg-gradient-to-r from-[#1F2937] to-[#374151] hover:from-[#374151] hover:to-[#1F2937] transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg text-white"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -124,9 +124,9 @@ export default function Login() {
               )}
             </Button>
             
-            <div className="text-center text-sm text-muted-foreground mt-4 animate-fade-in">
+            <div className="text-center text-sm text-gray-400 mt-4 animate-fade-in">
               Don't have an account?{" "}
-              <Link to="/register" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200">
+              <Link to="/register" className="text-gray-300 hover:text-white hover:underline transition-colors duration-200">
                 Create an account
               </Link>
             </div>
